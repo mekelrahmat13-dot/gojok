@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoJok - Super App Indonesia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #ff6b6b;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .header-icons i:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 140px;
+            padding: 0 2rem 2rem;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .balance-info h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .topup-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .topup-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Service Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .gojek { color: #00c851; }
+        .gocar { color: #ff6b6b; }
+        .gobike { color: #667eea; }
+        .gofood { color: #ffaa00; }
+        .gmart { color: #00d4aa; }
+        .gotix { color: #ff4081; }
+        .gopay { color: #667eea; }
+        .go-send { color: #00bcd4; }
+
+        .service-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Promo Banner */
+        .promo-banner {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Recent Orders */
+        .recent-orders {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .order-info h4 {
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .order-status {
+            color: #00c851;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 0 1rem 1rem;
+                margin-top: 160px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .balance-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.8rem 0;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-item span {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-motorcycle"></i>
+                GoJok
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="Cari makanan, top up, kirim paket...">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="balance-info">
+                <h3>Saldo GoPay</h3>
+                <div class="balance-amount">Rp 125.000</div>
+            </div>
+            <button class="topup-btn">Top Up</button>
+        </div>
+
+        <!-- Promo Banner -->
+        <div class="promo-banner">
+            <div class="promo-badge">PROMO TERBARU</div>
+            <h3>Diskon 50% GoFood</h3>
+            <p>Min. pembelian Rp 20.000</p>
+            <button style="background: rgba(255,255,255,0.3); border: none; padding: 0.5rem 1.5rem; border-radius: 20px; margin-top: 0.5rem; color: white; font-weight: bold;">Ambil Promo</button>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="recent-orders">
+            <h3 class="section-title">Layanan Utama</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-motorcycle service-icon gojek"></i>
+                    <div class="service-name">GoJok</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-car service-icon gocar"></i>
+                    <div class="service-name">GoCar</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-bicycle service-icon gobike"></i>
+                    <div class="service-name">GoBike</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-utensils service-icon gofood"></i>
+                    <div class="service-name">GoFood</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shopping-bag service-icon gmart"></i>
+                    <div class="service-name">GoMart</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ticket-alt service-icon gotix"></i>
+                    <div class="service-name">GoTix</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-wallet service-icon gopay"></i>
+                    <div class="service-name">GoPay</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shipping-fast service-icon go-send"></i>
+                    <div class="service-name">GoSend</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="recent-orders">
+            <h3 class="section-title">Pesanan Terbaru</h3>
+            <div class="order-item">
+                <div class="order-icon" style="background: #ff6b6b;">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="order-info">
+                    <h4>Nasi Goreng Spesial</h4>
+                    <div class="order-status">Sedang dipersiapkan</div>
+                </div>
+            </div>
+            <div class="order-item">
+                <div class="order-icon" style="background: #667eea;">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <div class="order-info">
+                    <h4>GoJok ke Mall</h4>
+                    <div class="order-status">Selesai</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>GoPay</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-shopping-bag"></i>
+            <span>GoShop</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-history"></i>
+            <span>Riwayat</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Akun</span>
+        </div>
+    </nav>
+
+    <script>
+        // Interactive elements
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', function() {
+                alert(`Layanan ${this.querySelector('.service-name').textContent} dipilih!`);
+            });
+        });
+
+        document.querySelector('.topup-btn').addEventListener('click', function() {
+            alert('Fitur Top Up GoPay - Segera hadir!');
+        });
+
+        document.querySelector('.search-box').addEventListener('focus', function() {
+            this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.3)';
+        });
+
+        document.querySelector('.search-box').addEventListener('blur', function() {
+            this.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        });
+
+        // Bottom nav interaction
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll for mobile
+        document.querySelector('.search-box').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert('Mencari: ' + this.value);
+            }
+        });
+    </script>
+</body>
+</html>
